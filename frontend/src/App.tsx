@@ -58,7 +58,7 @@ const App: React.FC = () => {
                 <img src="/symbiot-w-logo.png" alt="Symbiot Logo" className="navbar-logo symbiot" />
               </div>
             </div>
-            <div className="brand-text">SYMBIOT<span>2026</span></div>
+            <div className="brand-text">SYMBIOT</div>
           </div>
 
           <div className="nav-links">
@@ -122,6 +122,18 @@ const App: React.FC = () => {
                 <div className="orbit-el orbit-3"><span>🤖</span> Robotics</div>
                 <div className="orbit-el orbit-4"><span>🧠</span> Edge AI</div>
                 <div className="orbit-el orbit-5"><span>🔬</span> VLSI</div>
+              </div>
+            </div>
+          </div>
+
+          <div className="yellow-strip-container">
+            <div className="yellow-strip-content">
+              <div className="strip-pattern-left">
+                {Array(12).fill(0).map((_, i) => <div className="strip-arrow-left" key={`l-${i}`}></div>)}
+              </div>
+              <div className="yellow-strip-text">DESIGN.BUILD.DEPLOY</div>
+              <div className="strip-pattern-right">
+                {Array(12).fill(0).map((_, i) => <div className="strip-arrow-right" key={`r-${i}`}></div>)}
               </div>
             </div>
           </div>
