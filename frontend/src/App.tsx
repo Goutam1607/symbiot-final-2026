@@ -1,5 +1,130 @@
 import React, { useState, useEffect } from 'react';
 import './style.css';
+import CircuitBackground from './CircuitBackground';
+
+const SectionDivider: React.FC = () => (
+  <div className="section-divider">
+    <div className="node left"></div>
+    <div className="trace-line">
+      <div className="pulse"></div>
+    </div>
+    <div className="node center"></div>
+    <div className="trace-line">
+      <div className="pulse" style={{ animationDelay: '1.5s' }}></div>
+    </div>
+    <div className="node right"></div>
+  </div>
+);
+
+// --- Prize Card Component ---
+const PrizeCard: React.FC<{
+  title: string;
+  amount: string;
+  pool: string;
+  details: string[];
+  icon: React.ReactNode;
+  colorClass?: string;
+  isWinner?: boolean;
+}> = ({ title, amount, pool, details, icon, colorClass = '', isWinner = false }) => {
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  return (
+    <div 
+      className={`glass-panel prize-card-interactive ${isWinner ? 'winner-highlight' : ''}`}
+      onMouseEnter={() => setIsExpanded(true)}
+      onMouseLeave={() => setIsExpanded(false)}
+      onClick={() => setIsExpanded(!isExpanded)}
+    >
+      <div className={`prize-front ${isExpanded ? 'active' : ''}`}>
+        <div className={`prize-icon-wrapper ${colorClass}`}>
+          {icon}
+        </div>
+        <div className="prize-category-label"><span>{title}</span></div>
+        <div className={`prize-amount ${colorClass}`}>{amount}</div>
+      </div>
+
+      <div className={`prize-details-overlay ${isExpanded ? 'visible' : ''}`}>
+        <div className="prize-pool-label">{pool}</div>
+        <ul className="prize-details-list">
+          {details.map((detail, idx) => (
+            <li key={idx}>
+              <span className="detail-bullet"></span>
+              {detail}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  );
+};
+
+// --- Live Hardware Countdown Timer ---
+const CountdownTimer: React.FC = () => {
+  const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+
+  useEffect(() => {
+    // Target Date: April 24, 2026 08:30:00 (Start of Hackathon)
+    const targetDate = new Date('2026-04-24T08:30:00').getTime();
+
+    const updateTimer = () => {
+      const now = new Date().getTime();
+      const distance = targetDate - now;
+
+      if (distance < 0) {
+        setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+        return;
+      }
+
+      setTimeLeft({
+        days: Math.floor(distance / (1000 * 60 * 60 * 24)),
+        hours: Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
+        minutes: Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)),
+        seconds: Math.floor((distance % (1000 * 60)) / 1000)
+      });
+    };
+
+    updateTimer(); // Initial call
+    const interval = setInterval(updateTimer, 1000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const formatNumber = (num: number) => num.toString().padStart(2, '0');
+
+  return (
+    <div className="countdown-section">
+      <h3 className="countdown-title">Final Showdown Starts In</h3>
+      <div className="countdown-grid">
+        <div className="countdown-box">
+          <div className="countdown-label">DAYS</div>
+          <div className="countdown-circle">
+            <span className="countdown-value">{formatNumber(timeLeft.days)}</span>
+          </div>
+        </div>
+        
+        <div className="countdown-box">
+          <div className="countdown-label">HOURS</div>
+          <div className="countdown-circle">
+            <span className="countdown-value">{formatNumber(timeLeft.hours)}</span>
+          </div>
+        </div>
+        
+        <div className="countdown-box">
+          <div className="countdown-label">MINUTES</div>
+          <div className="countdown-circle">
+            <span className="countdown-value">{formatNumber(timeLeft.minutes)}</span>
+          </div>
+        </div>
+        
+        <div className="countdown-box">
+          <div className="countdown-label">SECONDS</div>
+          <div className="countdown-circle">
+            <span className="countdown-value">{formatNumber(timeLeft.seconds)}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 const App: React.FC = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -47,6 +172,8 @@ const App: React.FC = () => {
         <div className="gradient-orb blue"></div>
         <div className="gradient-orb purple"></div>
       </div>
+      
+      <CircuitBackground />
 
       <nav className={`navbar ${scrolled ? 'scrolled' : ''}`}>
         <div className="navbar-container">
@@ -116,12 +243,50 @@ const App: React.FC = () => {
               <div className="logo-glow-bg"></div>
               <img src="/symbiot-teal-logo.png" alt="Symbiot Logo" className="hero-main-logo" />
 
+              <svg className="hero-traces" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+                <g className="trace-group">
+                  <path d="M 200 200 L 120 120 L 80 120" />
+                  <circle cx="80" cy="120" r="4" className="node" />
+                </g>
+                <g className="trace-group">
+                  <path d="M 200 200 L 280 120 L 320 120" />
+                  <circle cx="320" cy="120" r="4" className="node" />
+                </g>
+                <g className="trace-group">
+                  <path d="M 200 200 L 280 280 L 320 280" />
+                  <circle cx="320" cy="280" r="4" className="node" />
+                </g>
+                <g className="trace-group">
+                  <path d="M 200 200 L 120 280 L 80 280" />
+                  <circle cx="80" cy="280" r="4" className="node" />
+                </g>
+                <g className="trace-group">
+                  <path d="M 200 200 L 200 320" />
+                  <circle cx="200" cy="320" r="4" className="node" />
+                </g>
+              </svg>
+
               <div className="orbit-elements">
-                <div className="orbit-el orbit-1"><span>⚡</span> Embedded Systems</div>
-                <div className="orbit-el orbit-2"><span>🌐</span> IoT</div>
-                <div className="orbit-el orbit-3"><span>🤖</span> Robotics</div>
-                <div className="orbit-el orbit-4"><span>🧠</span> Edge AI</div>
-                <div className="orbit-el orbit-5"><span>🔬</span> VLSI</div>
+                <div className="orbit-el orbit-1">
+                  <span className="hw-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect><rect x="9" y="9" width="6" height="6"></rect><line x1="9" y1="1" x2="9" y2="4"></line><line x1="15" y1="1" x2="15" y2="4"></line><line x1="9" y1="20" x2="9" y2="23"></line><line x1="15" y1="20" x2="15" y2="23"></line><line x1="20" y1="9" x2="23" y2="9"></line><line x1="20" y1="14" x2="23" y2="14"></line><line x1="1" y1="9" x2="4" y2="9"></line><line x1="1" y1="14" x2="4" y2="14"></line></svg></span>
+                  Embedded Systems
+                </div>
+                <div className="orbit-el orbit-2">
+                  <span className="hw-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="18" cy="18" r="3"></circle><circle cx="6" cy="6" r="3"></circle><circle cx="18" cy="6" r="3"></circle><circle cx="6" cy="18" r="3"></circle><line x1="18" y1="9" x2="18" y2="15"></line><line x1="9" y1="18" x2="15" y2="18"></line><line x1="9" y1="6" x2="15" y2="6"></line><line x1="6" y1="9" x2="6" y2="15"></line><path d="M12 6v12M6 12h12"></path></svg></span>
+                  IoT
+                </div>
+                <div className="orbit-el orbit-3">
+                  <span className="hw-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="11" width="18" height="10" rx="2" ry="2"></rect><circle cx="12" cy="5" r="2"></circle><path d="M12 7v4M8 11v4M16 11v4"></path></svg></span>
+                  Robotics
+                </div>
+                <div className="orbit-el orbit-4">
+                  <span className="hw-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"></path><circle cx="12" cy="12" r="3"></circle><path d="M12 7V4M12 20v-3M7 12H4M20 12h-3M8.46 8.46L6.34 6.34M17.66 17.66l-2.12-2.12M8.46 15.54l-2.12 2.12M17.66 6.34l-2.12 2.12"></path></svg></span>
+                  Edge AI
+                </div>
+                <div className="orbit-el orbit-5">
+                  <span className="hw-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="2" y="2" width="20" height="20" rx="2" ry="2"></rect><path d="M7 2v20M17 2v20M2 7h20M2 17h20"></path><rect x="9" y="9" width="6" height="6" fill="currentColor"></rect></svg></span>
+                  VLSI
+                </div>
               </div>
             </div>
           </div>
@@ -154,6 +319,10 @@ const App: React.FC = () => {
           </div>
         </div>
 
+        <CountdownTimer />
+
+        <SectionDivider />
+
         <section id="about" className="section">
           <div className="section-header">
             <h2 className="section-title">About <span className="text-gradient">SYMBIOT</span></h2>
@@ -181,6 +350,8 @@ const App: React.FC = () => {
             </div>
           </div>
         </section>
+
+        <SectionDivider />
 
         <section id="schedule" className="section">
           <div className="section-header">
@@ -344,85 +515,73 @@ const App: React.FC = () => {
           </div>
         </section>
 
-        <section id="prizes" className="section">
+        <SectionDivider />
+
+        <section id="prizes" className="section bg-alt pattern-grid">
           <div className="section-header">
             <h2 className="section-title">Rewards & <span className="text-gradient">Recognition</span></h2>
             <p className="section-subtitle">Celebrate engineering excellence with prestigious titles and exciting rewards.</p>
           </div>
 
           <div className="prizes-grid">
-            {/* WINNER */}
-            <div className="prize-card">
-              <div className="prize-category-label"><span>WINNER</span></div>
-              <div className="prize-pool-label">Prize Pool Worth 2.5 Lakh+</div>
-              <div className="prize-amount gold">₹25K</div>
-              <ul className="prize-details">
-                <li>25k cash prize</li>
-                <li>Electronic kit and subscriptions</li>
-                <li>IEEE Certificate</li>
-              </ul>
-            </div>
+            <PrizeCard 
+              title="WINNER"
+              pool="Prize Pool Worth 2.5 Lakh+"
+              amount="₹25K"
+              details={["25k cash prize", "Electronic kit and subscriptions", "IEEE Certificate"]}
+              colorClass="gold"
+              isWinner={true}
+              icon={<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path><path d="M4 22h16"></path><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"></path><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"></path><path d="M18 2H6v7a6 6 0 0 0 12 0V2z"></path></svg>}
+            />
+            
+            <PrizeCard 
+              title="RUNNER UP"
+              pool="Prize Pool Worth 1.5 Lakh+"
+              amount="₹15K"
+              details={["15k cash prize", "Electronic kit and subscriptions", "IEEE Certificate"]}
+              colorClass="silver"
+              icon={<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg>}
+            />
 
-            {/* RUNNER */}
-            <div className="prize-card">
-              <div className="prize-category-label"><span>RUNNER</span></div>
-              <div className="prize-pool-label">Prize Pool Worth 1.5 Lakh+</div>
-              <div className="prize-amount silver">₹15K</div>
-              <ul className="prize-details">
-                <li>15k cash prize</li>
-                <li>Electronic kit and subscriptions</li>
-                <li>IEEE Certificate</li>
-              </ul>
-            </div>
+            <PrizeCard 
+              title="2ND RUNNER UP"
+              pool="Prize Pool Worth 1.25 Lakh+"
+              amount="₹10K"
+              details={["10k cash prize", "Electronic kit and subscriptions", "IEEE Certificate"]}
+              colorClass="bronze"
+              icon={<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg>}
+            />
 
-            {/* SECOND RUNNER */}
-            <div className="prize-card">
-              <div className="prize-category-label"><span>2ND RUNNER</span></div>
-              <div className="prize-pool-label">Prize Pool Worth 1.25 Lakh+</div>
-              <div className="prize-amount bronze">₹10K</div>
-              <ul className="prize-details">
-                <li>10k cash prize</li>
-                <li>Electronic kit and subscriptions</li>
-                <li>IEEE Certificate</li>
-              </ul>
-            </div>
+            <PrizeCard 
+              title="BEST IDEA"
+              pool="Prize Pool Worth 75k+"
+              amount="₹5K"
+              details={["5k cash prize", "Goodies and swags", "IEEE Certificate"]}
+              colorClass="cyan"
+              icon={<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M9 18h6"></path><path d="M10 22h4"></path><path d="M12 2v1"></path><path d="M12 7v1"></path><path d="M5.6 5.6l.7.7"></path><path d="M18.4 5.6l-.7.7"></path><path d="M2 12h1"></path><path d="M21 12h1"></path><path d="M15 18c0-3.3 2.7-6 6-6s6 2.7 6 6s-2.7 6-6 6s-6-2.7-6-6z" transform="translate(-9 -4)"></path></svg>}
+            />
 
-            {/* BEST WOMEN'S TEAM */}
-            <div className="prize-card">
-              <div className="prize-category-label"><span>BEST WOMEN</span></div>
-              <div className="prize-pool-label">Prize Pool Worth 75k+</div>
-              <div className="prize-amount">₹5K</div>
-              <ul className="prize-details">
-                <li>5k cash prize</li>
-                <li>Goodies and swags</li>
-                <li>IEEE Certificate</li>
-              </ul>
-            </div>
+            <PrizeCard 
+              title="BEST WOMEN TEAM"
+              pool="Prize Pool Worth 75k+"
+              amount="₹5K"
+              details={["5k cash prize", "Goodies and swags", "IEEE Certificate"]}
+              colorClass="cyan"
+              icon={<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>}
+            />
 
-            {/* BEST IDEA */}
-            <div className="prize-card">
-              <div className="prize-category-label"><span>BEST IDEA</span></div>
-              <div className="prize-pool-label">Prize Pool Worth 75k+</div>
-              <div className="prize-amount">₹5K</div>
-              <ul className="prize-details">
-                <li>5k cash prize</li>
-                <li>Goodies and swags</li>
-                <li>IEEE Certificate</li>
-              </ul>
-            </div>
-
-            {/* PARTICIPATION */}
-            <div className="prize-card">
-              <div className="prize-category-label"><span>PARTICIPATION</span></div>
-              <div className="prize-pool-label">Prize Pool Worth 10k+</div>
-              <div className="prize-amount" style={{ fontSize: '1.5rem', letterSpacing: '2px' }}>SWAGS</div>
-              <ul className="prize-details">
-                <li>Goodies and swags</li>
-                <li>IEEE Certificate</li>
-              </ul>
-            </div>
+            <PrizeCard 
+              title="PARTICIPATION"
+              pool="Prize Pool Worth 10k+"
+              amount="SWAGS"
+              details={["Goodies and swags", "IEEE Certificate"]}
+              colorClass="cyan"
+              icon={<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="20 12 20 22 4 22 4 12"></polyline><rect x="2" y="7" width="20" height="5"></rect><line x1="12" y1="22" x2="12" y2="7"></line><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"></path><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"></path></svg>}
+            />
           </div>
         </section>
+
+        <SectionDivider />
 
         <section id="gallery" className="section">
           <div className="section-header">
@@ -487,6 +646,8 @@ const App: React.FC = () => {
           </div>
         </section>
 
+        <SectionDivider />
+
         <section id="sponsors" className="section sponsors-section">
           <div className="section-header">
             <h2 className="section-title"><span className="text-gradient">Sponsors</span></h2>
@@ -506,7 +667,9 @@ const App: React.FC = () => {
           </div>
         </section>
 
-        <section id="faq" className="section">
+        <SectionDivider />
+
+        <section id="faq" className="section bg-alt">
           <div className="section-header">
             <h2 className="section-title"><span className="text-gradient">FAQ</span></h2>
             <p className="section-subtitle">Everything you need to know about SYMBIOT 2026</p>
