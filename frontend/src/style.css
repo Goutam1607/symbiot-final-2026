@@ -647,6 +647,10 @@ h1, h2, h3, h4, h5, h6 {
   padding: 120px 2rem 60px;
   max-width: 1280px;
   margin: 0 auto;
+<<<<<<< HEAD
+=======
+  overflow: hidden;
+>>>>>>> 259c231d70f962ba867f4e385e85d6cd015abe4b
 }
 
 .hero-content {
@@ -654,6 +658,7 @@ h1, h2, h3, h4, h5, h6 {
   max-width: 600px;
   position: relative;
   z-index: 10;
+<<<<<<< HEAD
   will-change: transform;
 }
 
@@ -662,6 +667,8 @@ h1, h2, h3, h4, h5, h6 {
   flex-direction: column;
   gap: 0.5rem;
   margin-bottom: 1.5rem;
+=======
+>>>>>>> 259c231d70f962ba867f4e385e85d6cd015abe4b
 }
 
 .hero-badge {
@@ -675,6 +682,7 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--accent-cyan);
   font-size: 0.875rem;
   font-weight: 600;
+<<<<<<< HEAD
   text-transform: uppercase;
   letter-spacing: 1px;
   align-self: flex-start;
@@ -684,6 +692,11 @@ h1, h2, h3, h4, h5, h6 {
   background: rgba(0, 255, 102, 0.07);
   border-color: rgba(0, 255, 102, 0.3);
   color: #00ff88;
+=======
+  margin-bottom: 1.5rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+>>>>>>> 259c231d70f962ba867f4e385e85d6cd015abe4b
 }
 
 .hero-title {
@@ -772,7 +785,11 @@ h1, h2, h3, h4, h5, h6 {
   display: flex;
   align-items: center;
   justify-content: center;
+<<<<<<< HEAD
   will-change: transform;
+=======
+  padding-bottom: 40px; /* Room for yellow strip */
+>>>>>>> 259c231d70f962ba867f4e385e85d6cd015abe4b
 }
 
 .logo-container {
@@ -2007,6 +2024,7 @@ h1, h2, h3, h4, h5, h6 {
 /* Poster Restyling Cleanup */
 
 
+<<<<<<< HEAD
 /* -------------------------------- */
 /* FULL-WIDTH MARQUEE STRIP          */
 /* -------------------------------- */
@@ -2016,10 +2034,23 @@ h1, h2, h3, h4, h5, h6 {
   width: 100%;
   background: var(--accent-yellow);
   padding: 14px 0;
+=======
+.yellow-strip-container {
+  position: absolute;
+  bottom: 0px;
+  left: 0;
+  width: 100%;
+  background: var(--accent-yellow);
+  padding: 12px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+>>>>>>> 259c231d70f962ba867f4e385e85d6cd015abe4b
   border-top: 4px solid #1a1a1a;
   border-bottom: 4px solid #1a1a1a;
   z-index: 100;
   overflow: hidden;
+<<<<<<< HEAD
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
 }
 
@@ -2044,6 +2075,18 @@ h1, h2, h3, h4, h5, h6 {
   align-items: center;
   gap: 1.2rem;
   padding: 0 2rem;
+=======
+  box-shadow: 0 -10px 30px rgba(0,0,0,0.5);
+}
+
+.yellow-strip-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  white-space: nowrap;
+  width: 100%;
+>>>>>>> 259c231d70f962ba867f4e385e85d6cd015abe4b
 }
 
 .yellow-strip-text {
@@ -2053,6 +2096,7 @@ h1, h2, h3, h4, h5, h6 {
   font-style: italic;
   color: #1a1a1a;
   letter-spacing: 3px;
+<<<<<<< HEAD
   text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.15);
 }
 
@@ -2101,5 +2145,46 @@ h1, h2, h3, h4, h5, h6 {
 
 @media (max-width: 768px) {
   .yellow-strip-text { font-size: 1.5rem; letter-spacing: 1px; }
+=======
+}
+
+.strip-pattern-left, .strip-pattern-right {
+  display: flex;
+  gap: 8px;
+  flex: 1;
+}
+
+.strip-pattern-left {
+  justify-content: flex-end;
+}
+.strip-pattern-right {
+  justify-content: flex-start;
+}
+
+/* Creating arrow shape with borders */
+.strip-arrow-left {
+  width: 0; 
+  height: 0; 
+  border-top: 8px solid transparent;
+  border-bottom: 8px solid transparent;
+  border-right: 12px solid #1a1a1a;
+}
+
+.strip-arrow-right {
+  width: 0; 
+  height: 0; 
+  border-top: 8px solid transparent;
+  border-bottom: 8px solid transparent;
+  border-left: 12px solid #1a1a1a;
+}
+
+/* Adjust mobile styles */
+@media (max-width: 768px) {
+  .poster-title { font-size: 3.5rem; }
+  .poster-date { font-size: 1.5rem; }
+  .yellow-strip-text { font-size: 1.5rem; letter-spacing: 1px; }
+  .strip-pattern-left, .strip-pattern-right { display: none; }
+  .poster-characters img { max-width: 100%; padding: 0 20px;}
+>>>>>>> 259c231d70f962ba867f4e385e85d6cd015abe4b
 }
 

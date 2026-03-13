@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import React, { useState, useEffect, useRef } from 'react';
+=======
+import React, { useState, useEffect } from 'react';
+>>>>>>> 259c231d70f962ba867f4e385e85d6cd015abe4b
 import './style.css';
 import CircuitBackground from './CircuitBackground';
 
@@ -132,9 +136,12 @@ const App: React.FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activePopup, setActivePopup] = useState<string | null>(null);
 
+<<<<<<< HEAD
   const heroContentRef = useRef<HTMLDivElement>(null);
   const heroVisualRef = useRef<HTMLDivElement>(null);
 
+=======
+>>>>>>> 259c231d70f962ba867f4e385e85d6cd015abe4b
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
@@ -168,6 +175,7 @@ const App: React.FC = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+<<<<<<< HEAD
   // Parallax scroll effect
   useEffect(() => {
     const onParallax = () => {
@@ -203,6 +211,8 @@ const App: React.FC = () => {
     return () => observer.disconnect();
   }, []);
 
+=======
+>>>>>>> 259c231d70f962ba867f4e385e85d6cd015abe4b
   return (
     <>
       <div className="bg-gradients">
@@ -218,6 +228,13 @@ const App: React.FC = () => {
           <div className="navbar-brand">
             <div className="navbar-logos">
               <img src="/vvce-logo.png" alt="VVCE Logo" className="navbar-logo vvce" />
+<<<<<<< HEAD
+=======
+              <div className="navbar-symbiot-wrapper">
+                <div className="nav-glow"></div>
+                <img src="/symbiot-w-logo.png" alt="Symbiot Logo" className="navbar-logo symbiot" />
+              </div>
+>>>>>>> 259c231d70f962ba867f4e385e85d6cd015abe4b
             </div>
             <div className="brand-text">SYMBIOT</div>
           </div>
@@ -255,11 +272,16 @@ const App: React.FC = () => {
 
       <main>
         <section id="home" className="hero">
+<<<<<<< HEAD
           <div className="hero-content" ref={heroContentRef}>
             <div className="hero-badges">
               <div className="hero-badge">National Level &middot; 24-Hour Hardware Hackathon</div>
               <div className="hero-badge hero-badge-secondary">One of Mysuru&apos;s Biggest Hackathons</div>
             </div>
+=======
+          <div className="hero-content">
+            <div className="hero-badge">A National Level 24-Hours Hardware Hackathon</div>
+>>>>>>> 259c231d70f962ba867f4e385e85d6cd015abe4b
             <h1 className="hero-title">
               Design. Build. <br />
               <span className="text-gradient">Deploy.</span>
@@ -275,10 +297,17 @@ const App: React.FC = () => {
             </div>
           </div>
 
+<<<<<<< HEAD
           <div className="hero-visual" ref={heroVisualRef}>
             <div className="logo-container">
               <div className="logo-glow-bg"></div>
               <img src="/logo.png" alt="Symbiot Logo" className="hero-main-logo" />
+=======
+          <div className="hero-visual">
+            <div className="logo-container">
+              <div className="logo-glow-bg"></div>
+              <img src="/symbiot-teal-logo.png" alt="Symbiot Logo" className="hero-main-logo" />
+>>>>>>> 259c231d70f962ba867f4e385e85d6cd015abe4b
 
               <svg className="hero-traces" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
                 <g className="trace-group">
@@ -328,6 +357,7 @@ const App: React.FC = () => {
             </div>
           </div>
 
+<<<<<<< HEAD
         </section>
 
         {/* Full-width animated marquee strip */}
@@ -346,6 +376,20 @@ const App: React.FC = () => {
             ))}
           </div>
         </div>
+=======
+          <div className="yellow-strip-container">
+            <div className="yellow-strip-content">
+              <div className="strip-pattern-left">
+                {Array(12).fill(0).map((_, i) => <div className="strip-arrow-left" key={`l-${i}`}></div>)}
+              </div>
+              <div className="yellow-strip-text">DESIGN.BUILD.DEPLOY</div>
+              <div className="strip-pattern-right">
+                {Array(12).fill(0).map((_, i) => <div className="strip-arrow-right" key={`r-${i}`}></div>)}
+              </div>
+            </div>
+          </div>
+        </section>
+>>>>>>> 259c231d70f962ba867f4e385e85d6cd015abe4b
 
         <div className="stats-ribbon">
           <div className="stat-item">
